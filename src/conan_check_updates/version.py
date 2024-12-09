@@ -315,6 +315,7 @@ def find_update(
     current_version: VersionLike,
     versions: Sequence[VersionLike],
     target: VersionPart,
+    released_only: bool,
 ) -> Optional[Version]:
     """Find latest update for given target."""
     if not is_semantic_version(current_version):
@@ -322,6 +323,8 @@ def find_update(
 
     def is_update(v: Version) -> bool:
         assert is_semantic_version(current_version)
+        if released_only and v.prerelease:
+            False
         return v > current_version and (v.difference(current_version) or 0) <= target
 
     versions_semantic = list(filter(is_semantic_version, versions))

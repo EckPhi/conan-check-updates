@@ -110,6 +110,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> CliArgs:
         action="help",
         help="Show this message and exit.",
     )
+    parser.add_argument(
+        "-r",
+        "--released",
+        action="store_true",
+        help="Only search for released versions.",
+    )
 
     args = parser.parse_args(argv)
 
@@ -207,6 +213,7 @@ async def main(argv: Optional[Sequence[str]] = None):
             target=args.target,
             timeout=args.timeout,
             progress_callback=pbar.update,
+            released_only=args.released
         )
 
     print()  # empty line after progress bar

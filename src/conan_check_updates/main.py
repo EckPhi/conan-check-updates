@@ -55,6 +55,7 @@ async def check_updates(
     target: VersionPart = VersionPart.MAJOR,
     timeout: Optional[int] = TIMEOUT,
     progress_callback: Optional[ProgressCallback] = None,
+    released_only: Optional[bool] = False
 ) -> List[CheckUpdateResult]:
     """
     Check for updates of conanfile.py/conanfile.txt requirements.
@@ -81,7 +82,7 @@ async def check_updates(
         current_version_resolved = resolve_version(current_version_or_range, result.versions)
 
         update_version = (
-            find_update(current_version_resolved, result.versions, target=target)
+            find_update(current_version_resolved, result.versions, target=target, released_only=released_only)
             if current_version_resolved
             else None
         )
